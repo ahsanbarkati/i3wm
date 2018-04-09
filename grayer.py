@@ -4,8 +4,12 @@ import sys
 
 pos=sys.argv[1]
 neg=sys.argv[2]
-os.system("mkdir positives")
-os.system('mkdir negatives')
+try:
+	os.system("mkdir positives")
+	os.system('mkdir negatives')
+except:
+	print('Directory already exists')
+
 ulpath = pos
 c=0
 for infile in glob.glob( os.path.join(ulpath, "*.jpg") ):
