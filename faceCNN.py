@@ -1,20 +1,6 @@
 
-# coding: utf-8
-
-# In[1]:
-
-
 import os, glob
 import cv2
-
-
-# In[18]:
-
-
-
-
-# In[2]:
-
 
 import numpy as np
 import pandas
@@ -40,13 +26,6 @@ from keras.constraints import maxnorm
 from keras import regularizers
 
 
-# In[3]:
-
-
-
-# In[4]:
-
-
 X=[]
 Y=np.zeros(52,dtype='int32')
 i=0
@@ -65,21 +44,8 @@ for infile in glob.glob( os.path.join('abhi/', "*.jpg") ):
     Y[i]=int(1)
     i=i+1
 
-# In[5]:
-
-
 X=np.array(X)
 X=X/255
-#print X.shape
-#type(Y[0])
-#for i in range(52):
-#    if(Y[i]==1):
-#        Y[i]=0.99
-#        Y[i]=int(Y[i])
-
-
-# In[ ]:
-
 
 model = Sequential()
 model.add(Conv2D(32, kernel_size=(20, 20), strides=(1, 1),
@@ -96,8 +62,6 @@ model.compile(loss=keras.losses.logcosh,
 model.fit(X,Y,epochs=50)
 
 
-# In[22]:
-
 
 im=cv2.imread('predict.jpg')
 x=[]
@@ -106,4 +70,4 @@ x=np.array(x)
 x=x/255
 y=model.predict(x)
 print y
-
+model.save('my_face.h5')
