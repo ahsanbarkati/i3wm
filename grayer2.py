@@ -19,10 +19,10 @@ for infile in glob.glob( os.path.join(ulpath, "*.jpg") ):
 	resized_image = cv2.resize(im, (dim, dim))
 	im = cv2.cvtColor(resized_image, cv2.COLOR_BGR2GRAY)
 	faces=haar.detectMultiScale(im,scaleFactor=1.1,minNeighbors=5)
-	print(faces)
 	if(len(faces)):
 		[x,y,w,h]=faces[0]
 		im=im[y-10:y+h+10,x-10:x+w+10]
+	im = cv2.resize(im,None,fx=10, fy=10, interpolation = cv2.INTER_LINEAR)
 	cv2.imwrite('positives/'+str(c)+'.jpg',im)
 	c=c+1
 
@@ -36,5 +36,8 @@ for infile in glob.glob( os.path.join(ulpath, "*.jpg") ):
 	if(len(faces)):
 		[x,y,w,h]=faces[0]
 		im=im[y-10:y+h+10,x-10:x+w+10]
+	im = cv2.resize(im,None,fx=10, fy=10, interpolation = cv2.INTER_LINEAR)
+	im = cv2.resize(im, (dim, dim))
+
 	cv2.imwrite('negatives/'+str(c)+'.jpg',im)
 	c=c+1

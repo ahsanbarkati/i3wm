@@ -19,34 +19,35 @@ import os, glob
 import cv2
 
 l=0
+dim=400
 for infile in glob.glob( os.path.join('negatives/', "*.jpg") ):
     l=l+1
 for infile in glob.glob( os.path.join('positives/', "*.jpg") ):
     l=l+1
-X=[]
+X=np.full((l,400,400,3), 0)
 Y=np.zeros(l,dtype='int32')
 i=0
-for infile in glob.glob( os.path.join('negatives/', "*.jpg") ):
-    im = cv2.imread(infile)
-    #gray_image = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-    x=np.array(im)
-    X.append(list(x))
-    Y[i]=int(0)   
-    i=i+1
 for infile in glob.glob( os.path.join('positives/', "*.jpg") ):
     im = cv2.imread(infile)
     #gray_image = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-    x=np.array(im)
-    X.append(list(x))
+    im=cv2.resize(im,(dim,dim))
+    X[i]=np.array(im)
     Y[i]=int(1)
+    i=i+1
+for infile in glob.glob( os.path.join('negatives/', "*.jpg") ):
+    im = cv2.imread(infile)
+    #gray_image = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+    im=cv2.resize(im,(dim,dim))
+    X[i]=np.array(im)
+    Y[i]=int(0)   
     i=i+1
 
 X=np.array(X)
-print(X.shape)
 X=X/255
-dim=200
+
+a=input("Enter")
 model = Sequential()
-model.add(Conv2D(32, kernel_size=(20, 20), strides=(1, 1),
+model.add(Conv2D(32, kernel_size=(40, 40), strides=(1, 1),
                  activation='relu',
                  input_shape=[dim,dim,3],kernel_initializer='random_uniform'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
