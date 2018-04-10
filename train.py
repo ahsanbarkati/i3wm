@@ -44,11 +44,21 @@ for infile in glob.glob( os.path.join('positives/', "*.jpg") ):
 X=np.array(X)
 print(X.shape)
 X=X/255
-
+dim=200
 model = Sequential()
 model.add(Conv2D(32, kernel_size=(20, 20), strides=(1, 1),
                  activation='relu',
-                 input_shape=[50,50,3],kernel_initializer='random_uniform'))
+                 input_shape=[dim,dim,3],kernel_initializer='random_uniform'))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+model.add(Conv2D(32, kernel_size=(10, 10), strides=(1, 1),
+                 activation='relu',
+                 input_shape=[dim,dim,3],kernel_initializer='random_uniform'))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+model.add(Conv2D(32, kernel_size=(5, 5), strides=(1, 1),
+                 activation='relu',
+                 input_shape=[dim,dim,3],kernel_initializer='random_uniform'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 model.add(Flatten())
 model.add(Dense(100, activation='relu',kernel_initializer='random_uniform'))

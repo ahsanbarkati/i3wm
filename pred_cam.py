@@ -31,7 +31,7 @@ while True:
         print("Escape hit, closing...")
         break
     elif k%256 == 32:
-        im2=cv2.resize(frame,(50,50))
+        im2=cv2.resize(frame,(200,200))
         im2=cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
         cv2.imwrite('temp.jpg',im2)
         im=cv2.imread('temp.jpg')
@@ -40,7 +40,11 @@ while True:
         x=np.array(x)
         x=x/255
         y=model.predict(x)
-        print y
+		#if (y > 0.75 ):
+		#    print('Abhishek')
+		#else:
+		#    print('Not Abhishek')
+        print(y)
         call(["rm","temp.jpg"])
         img_counter += 1
 
